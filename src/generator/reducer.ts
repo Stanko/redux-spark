@@ -6,16 +6,15 @@ const camel2const = (camelCase:string):string => {
     .toUpperCase();
 };
 
-const capitalize = (str:string):string => {
-  return `${ str.charAt(0).toUpperCase() }${ str.slice(1) }`;
-}
-
+// Action handler function
 type TActionHandler = (state:any, action:object) => any;
 
+// Action handlers map
 interface IActionHandlerMap { 
   [key:string]: TActionHandler
 };
 
+// Async action handlers map 
 interface IAsyncActionHandlerMap { 
   start: TActionHandler,
   error: TActionHandler,
@@ -28,9 +27,14 @@ export default class Reducer {
   private actionCreators:any = {};
   private initialState:any;
 
-  constructor(name:string, initialState:any = {}, actionHandlers:IActionHandlerMap = {}) {
+  /**
+   * Creates Reducer class and registers it in the Core.
+   * 
+   * @param name - name of the reducer.
+   * @param initialState - reducer's initial state.
+   */
+  constructor(name:string, initialState:any = {}) {
     this.name = name;
-    this.actionHandlers = actionHandlers;
     this.initialState = initialState;
 
     core.registerReducer(this.name, this);
@@ -38,6 +42,13 @@ export default class Reducer {
 
   // -------- PUBLIC API
 
+  /**
+   * Adds synchronous action.
+   * Generates action type and action creator.
+   * 
+   * @param actionName - action name, it will be used for generating action type and as action creator name.
+   * @param handler - handler function.
+   */
   public addAction(actionName:string, handler:TActionHandler) {
     const actionType = camel2const(actionName);
     this.actionHandlers[actionType] = handler;
@@ -45,6 +56,14 @@ export default class Reducer {
     this.addActionCreator(actionName, actionType);
   }
 
+  /**
+   * Adds asynchronous action with three states start/error/success.
+   * Generates action types, action creators and sagas.
+   * 
+   * @param actionName - action name, it will be used for generating action type and as action creator name.
+   * @param promise - async promise which will used in saga.
+   * @param handlers - map with start/error/success handler functions.
+   */
   public addAsyncAction(actionName:string, promise:any, handlers:IAsyncActionHandlerMap) {
     // TODO 
     // create and register saga
@@ -68,6 +87,11 @@ export default class Reducer {
     });
   }
 
+  /**
+   * Gets all of the generated action creators
+   * 
+   * @return Map of reducer's action creators.
+   */
   public getActionCreators():any {
     const actionCreators = {};
     Object.keys(this.actionHandlers).forEach(actionType => {
@@ -81,23 +105,40 @@ export default class Reducer {
   }
 
   // -------- PUBLIC METHODS 
-  // -------- Used by the Core.ts
+  // -------- Used by the Core
 
+  /**
+   * Caution! Intended for internal use only.
+   * Returns reducer function.
+   * 
+   * @return Reducer function with using handlers map.
+   */
   public getReducerFunction() {
     return (state:any = this.initialState, action:any = {}) => {
       const actionHandler = this.actionHandlers[action.type];
-      return actionHandler ? actionHandler.handler(state, action) : state;
+      return actionHandler ? actionHandler(state, action) : state;
     }
   }
 
+  /**
+   * Returns reducer's name.
+   * 
+   * @return Reducer's name.
+   */
   public getName():string {
     return this.name;
   }
 
-  
 
   // -------- PRIVATE METHODS
 
+  /**
+   * Based on the action name and action creates generic action creator function,
+   * and registers it internally.
+   *
+   * @param actionName - Action name (ie. getUsers)
+   * @param actionType - Action type (ie. GET_USERS)
+   */
   private addActionCreator(actionName:string, actionType:string) {
     this.actionCreators[actionName] = (...params:any[]) => ({
       type: actionType,

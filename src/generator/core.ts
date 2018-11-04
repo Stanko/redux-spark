@@ -11,9 +11,10 @@ class Core {
   // -------- PUBLIC API
 
   /**
-   * Save reducer internally
+   * Save reducer internally. 
+   * Called by the reducer itself when it is created.
    *
-   * @param reducerName - reducer's name
+   * @param reducerName - reducer's name.
    * @param reducer - reducer to be registered.
    */
   public registerReducer(reducerName:string, reducer:Reducer) {
@@ -21,10 +22,10 @@ class Core {
   }
 
   /**
-   * Returns all of the generated reducers, 
-   * so they can be used in redux's combineReducers method
+   * Returns all of the registered reducers, 
+   * so they can be used in redux's combineReducers method.
    *
-   * @return Map of all generated reducers.
+   * @return Map of all registered reducers.
    */
   public getAllReducers():object {
     return Object.keys(this.reducers).map(reducerName => 
@@ -46,38 +47,3 @@ class Core {
 }
 
 export default new Core();
-
-/*
-const reducerName = 'brands';
-
-bison.registerReducer(reducerName, initialState);
-
-bison.generateAction(reducerName, 'getBrands', api.getBrands);
-
-bison.generateSyncAction(reducerName, 'reset', (state, action => {
-  // logika za reset
-}));
-
-bison.generateAction(getVocabulary, 'getVocabulary', api.getVocabulary, {
-  start: (state, action) => {
-    // logika za start
-  },
-  error: (state, action) => {
-    // logika za error
-  },
-  success: (state, action) => {
-    // logika za success
-  },
-});
-
-
-////////
-// reducers/index.js
-
-const reducers = bison.getAllReducers();
-
-export default combineReducers({
-  ...reducers,
-  // moar reducers
-});
-*/

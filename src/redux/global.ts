@@ -1,6 +1,13 @@
 import Reducer from 'src/generator/reducer';
 
+// TODO Fake API
+const api = {
+  getSettings: () => new Promise(resolve => {
+    // TODO
+  }),
+};
 
+// Create app reducer
 const global = new Reducer('app', {
   isModalActive: false,
   settings: null,
@@ -8,6 +15,7 @@ const global = new Reducer('app', {
   settingsLoading: false,
 });
 
+// Add sync action
 global.addAction('toggleModal', (state:any, action:any) => {
   return {
     ...state,
@@ -15,8 +23,8 @@ global.addAction('toggleModal', (state:any, action:any) => {
   };
 });
 
-// TODO add promise
-global.addAsyncAction('getSettings', {
+// Add async action
+global.addAsyncAction('getSettings', api.getSettings(), {
   start: (state:any, action:any) => {
     return {
       ...state,
@@ -24,6 +32,7 @@ global.addAsyncAction('getSettings', {
       settingsLoading: true,
     };
   },
+  // tslint:disable-next-line object-literal-sort-keys
   error: (state:any, action:any) => {
     return {
       ...state,
@@ -40,7 +49,11 @@ global.addAsyncAction('getSettings', {
   },
 });
 
-
+// Export action creators
+// {
+//   toggleModal
+//   getSettings
+// }
 export default global.getActionCreators();
 
 
