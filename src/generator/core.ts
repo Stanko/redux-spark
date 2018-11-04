@@ -28,9 +28,14 @@ class Core {
    * @return Map of all registered reducers.
    */
   public getAllReducers():object {
-    return Object.keys(this.reducers).map(reducerName => 
-      this.reducers[reducerName].getReducerFunction()
-    );
+    const reducers = {};
+
+    Object.keys(this.reducers).forEach(reducerName => {
+      const reducer = this.reducers[reducerName].getReducerFunction()
+      reducers[reducerName] = reducer;
+    });
+
+    return reducers;
   }
 
   /**
