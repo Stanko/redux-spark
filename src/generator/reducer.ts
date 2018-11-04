@@ -93,15 +93,7 @@ export default class Reducer {
    * @return Map of reducer's action creators.
    */
   public getActionCreators():any {
-    const actionCreators = {};
-    Object.keys(this.actionHandlers).forEach(actionType => {
-      const actionCreatorName = this.actionHandlers[actionType].name;
-
-      actionCreators[actionCreatorName] = (...params:any[]) => ({
-        type: actionType,
-        ...params,
-      });
-    });
+    return this.actionCreators;
   }
 
   // -------- PUBLIC METHODS 

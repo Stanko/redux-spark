@@ -8,7 +8,7 @@ const api = {
 };
 
 // Create app reducer
-const global = new Reducer('app', {
+const global = new Reducer('global', {
   isModalActive: false,
   settings: null,
   settingsError: null,
