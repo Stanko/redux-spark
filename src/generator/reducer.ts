@@ -96,6 +96,15 @@ export default class Reducer {
     return this.actionCreators;
   }
 
+  /**
+   * Gets map of action handlers
+   * 
+   * @return Map of action handlers.
+   */
+  public getActionHandlers() {
+    return this.actionHandlers;
+  }
+
   // -------- PUBLIC METHODS 
   // -------- Used by the Core
 
@@ -112,14 +121,15 @@ export default class Reducer {
     }
   }
 
+  // TODO check if we need this
   /**
    * Returns reducer's name.
    * 
    * @return Reducer's name.
    */
-  public getName():string {
-    return this.name;
-  }
+  // public getName():string {
+  //   return this.name;
+  // }
 
 
   // -------- PRIVATE METHODS

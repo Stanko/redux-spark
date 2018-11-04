@@ -5,8 +5,8 @@ interface IReducerMap {
 };
 
 class Core {
-  private reducers:IReducerMap;
-  private sagas:any[];
+  private reducers:IReducerMap = {};
+  private sagas:any = {};
 
   // -------- PUBLIC API
 
