@@ -64,6 +64,8 @@ global.addAsyncAction('getSettings', api.getSettings, {
 //   toggleModal
 //   getSettings
 // }
-export default global.getActionCreators();
-
+export const {
+  toggleModal,
+  getSettings,
+} = global.getActionCreators();
 

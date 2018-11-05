@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './App.css';
-import global from './redux/global';
+import { getSettings, toggleModal } from './redux/global';
 
 class App extends Component {
   public render() {
@@ -15,11 +15,11 @@ class App extends Component {
   }
 
   private handleGetSettingsClick = () => {
-    (this.props as any).dispatch((global as any).getSettings())
+    (this.props as any).dispatch(getSettings())
   }
 
   private handleToggleModalClick = () => {
-    (this.props as any).dispatch((global as any).toggleModal())
+    (this.props as any).dispatch(toggleModal())
   }
 }
 
