@@ -1,4 +1,5 @@
 import core from './core';
+import createSaga from './create-saga';
 
 const camel2const = (camelCase:string):string => {
   return camelCase
@@ -10,7 +11,7 @@ const camel2const = (camelCase:string):string => {
 type TActionHandler = (state:any, action:object) => any;
 
 // Action handlers map
-interface IActionHandlerMap { 
+interface IActionHandlersMap { 
   [key:string]: TActionHandler
 };
 
@@ -21,10 +22,19 @@ interface IAsyncActionHandlerMap {
   success: TActionHandler,
 };
 
+// Action creator function
+type TActionCreator = (...param:any) => object;
+
+// Action creators map
+interface IActionCreatorsMap { 
+  [key:string]: TActionCreator
+};
+
 export default class Reducer {
   private name:string;
-  private actionHandlers:IActionHandlerMap = {};
-  private actionCreators:any = {};
+  private actionHandlers:IActionHandlersMap = {};
+  private actionCreators:IActionCreatorsMap = {};
+  private sagas:any[] = [];
   private initialState:any;
 
   /**
@@ -40,7 +50,7 @@ export default class Reducer {
     core.registerReducer(this.name, this);
   }
 
-  // -------- PUBLIC API
+  // -------- PUBLIC INTERFACE
 
   /**
    * Adds synchronous action.
@@ -61,13 +71,13 @@ export default class Reducer {
    * Generates action types, action creators and sagas.
    * 
    * @param actionName - action name, it will be used for generating action type and as action creator name.
-   * @param promise - async promise which will used in saga.
+   * @param asyncMethod - async function which will used in saga (returns promise).
    * @param handlers - map with start/error/success handler functions.
    */
-  public addAsyncAction(actionName:string, promise:any, handlers:IAsyncActionHandlerMap) {
+  public addAsyncAction(actionName:string, asyncMethod:any, handlers:IAsyncActionHandlerMap) {
     // TODO 
     // create and register saga
-    // handle promise
+    // handle asyncMethod
     // allow user to specify saga effect (default "takeLatest")
     const actionTypeBody = camel2const(actionName);
     const actions = ['start', 'error', 'success'];
@@ -77,6 +87,10 @@ export default class Reducer {
       start: `${ actionTypeBody }_START`,
       success: `${ actionTypeBody }_SUCCESS`,
     }
+
+    // Create saga
+    const saga = createSaga(asyncMethod, actionTypes);
+    this.sagas.push(saga);
 
     this.addActionCreator(actionName, actionTypes.start);
     
@@ -96,17 +110,8 @@ export default class Reducer {
     return this.actionCreators;
   }
 
-  /**
-   * Gets map of action handlers
-   * 
-   * @return Map of action handlers.
-   */
-  public getActionHandlers() {
-    return this.actionHandlers;
-  }
-
   // -------- PUBLIC METHODS 
-  // -------- Used by the Core
+  // -------- For internal use only
 
   /**
    * Caution! Intended for internal use only.
@@ -115,10 +120,30 @@ export default class Reducer {
    * @return Reducer function with using handlers map.
    */
   public getReducerFunction() {
-    return (state:any = this.initialState, action:any = {}) => {
+    return (state:any, action:any = {}) => {
       const actionHandler = this.actionHandlers[action.type];
       return actionHandler ? actionHandler(state, action) : state;
     }
+  }
+
+  /**
+   * Caution! Intended for internal use only.
+   * Gets all of the generated sagas.
+   * 
+   * @return Array of all generated sagas.
+   */
+  public getSagas():any[] {
+    return this.sagas;
+  }
+
+  /**
+   * Caution! Intended for internal use only (testing).
+   * Gets map of action handlers
+   * 
+   * @return Map of action handlers.
+   */
+  public getActionHandlers() {
+    return this.actionHandlers;
   }
 
   // TODO check if we need this

@@ -6,9 +6,8 @@ interface IReducerMap {
 
 class Core {
   private reducers:IReducerMap = {};
-  private sagas:any = {};
 
-  // -------- PUBLIC API
+  // -------- PUBLIC INTERFACE
 
   /**
    * Save reducer internally. 
@@ -31,7 +30,7 @@ class Core {
     const reducers = {};
 
     Object.keys(this.reducers).forEach(reducerName => {
-      const reducer = this.reducers[reducerName].getReducerFunction()
+      const reducer = this.reducers[reducerName].getReducerFunction();
       reducers[reducerName] = reducer;
     });
 
@@ -44,8 +43,15 @@ class Core {
    *
    * @return Array of all generated sagas.
    */
-  public getAllSagas() {
-    return this.sagas;
+  public getAllSagas():any[] {
+    const allSagas:any[] = [];
+
+    Object.keys(this.reducers).forEach(reducerName => {
+      const reducerSagas = this.reducers[reducerName].getSagas();
+      allSagas.push(...reducerSagas);
+    });
+
+    return allSagas;
   }
 
   // -------- PRIVATE METHODS

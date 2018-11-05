@@ -24,7 +24,7 @@ global.addAction('toggleModal', (state:any, action:any) => {
 });
 
 // Add async action
-global.addAsyncAction('getSettings', api.getSettings(), {
+global.addAsyncAction('getSettings', api.getSettings, {
   start: (state:any, action:any) => {
     return {
       ...state,
