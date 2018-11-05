@@ -48,7 +48,7 @@ class Core {
 
     Object.keys(this.reducers).forEach(reducerName => {
       const reducerSagas = this.reducers[reducerName].getSagas();
-      allSagas.push(...reducerSagas);
+      allSagas.push(...reducerSagas.map(saga => saga()));
     });
 
     return allSagas;

@@ -3,7 +3,16 @@ import Reducer from 'src/generator/reducer';
 // TODO Fake API
 const api = {
   getSettings: () => new Promise(resolve => {
-    // TODO
+    if (Math.random() > 0.75) {
+      throw { message: 'error!' };
+    } else {
+      setTimeout(() => {
+        resolve({ users: [] });
+      }, 500);
+    }
+  })
+  .then((data) => {
+    return data;
   }),
 };
 
@@ -28,6 +37,7 @@ global.addAsyncAction('getSettings', api.getSettings, {
   start: (state:any, action:any) => {
     return {
       ...state,
+      settings: null,
       settingsError: null,
       settingsLoading: true,
     };

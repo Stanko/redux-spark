@@ -10,8 +10,10 @@ describe('Core', () => {
   });
 
   test('should be able to get created reducers', () => {
-    const usersReducer = new Reducer('users', {});
-    const settingsReducer = new Reducer('settings', {});
+    // tslint:disable-next-line
+    new Reducer('users', {});
+    // tslint:disable-next-line
+    new Reducer('settings', {});
         
     const reducers:any = core.getAllReducers();
 
