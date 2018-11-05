@@ -1,12 +1,12 @@
 import Reducer from './reducer';
 
 describe('Reducer', () => {
-	test('can be instantiated', () => {
-		expect(new Reducer('test', {})).toBeDefined();
-		expect(new Reducer('test', {})).toBeInstanceOf(Reducer);
-	});
+  test('can be instantiated', () => {
+    expect(new Reducer('test', {})).toBeDefined();
+    expect(new Reducer('test', {})).toBeInstanceOf(Reducer);
+  });
 
-	test('should be able to add sync action', () => {
+  test('should be able to add sync action', () => {
     const usersReducer = new Reducer('users', {});
         
     // Add sync action
@@ -22,7 +22,7 @@ describe('Reducer', () => {
     expect(typeof actionHandlers).toEqual('object');
     expect(Object.keys(actionHandlers).length).toBe(1);
     expect(typeof actionHandlers.ADD_USER).toEqual('function');
-	});
+  });
 
 
   test('should be able to add async action', () => {
@@ -48,10 +48,10 @@ describe('Reducer', () => {
     expect(typeof actionHandlers.GET_USERS_ERROR).toEqual('function');
     expect(typeof actionHandlers.GET_USERS_SUCCESS).toEqual('function');
   });
-  
+
   test('should be able to get reducer function', () => {
     const usersReducer = new Reducer('users', {});
-    
+
     const reducerFunction = usersReducer.getReducerFunction();
     expect(typeof reducerFunction).toEqual('function');
   });
@@ -69,7 +69,7 @@ describe('Reducer', () => {
         value: state.value - 1,
       };
     });
-    
+
     const actionCreators = counterReducer.getActionCreators();
     const reducerFunction = counterReducer.getReducerFunction();
 
@@ -82,5 +82,5 @@ describe('Reducer', () => {
     const stateAfterDecrease = reducerFunction({ value: 0 }, actionCreators.decrease());
 
     expect(stateAfterDecrease.value).toEqual(-1);
-	});
+  });
 });
