@@ -120,7 +120,7 @@ export default class Reducer {
    * @return Reducer function with using handlers map.
    */
   public getReducerFunction() {
-    return (state:any, action:any = {}) => {
+    return (state:any = this.initialState, action:any = {}) => {
       const actionHandler = this.actionHandlers[action.type];
       return actionHandler ? actionHandler(state, action) : state;
     }

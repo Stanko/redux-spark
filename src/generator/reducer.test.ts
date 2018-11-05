@@ -95,7 +95,7 @@ describe('Reducer', () => {
     const reducerFunction = counterReducer.getReducerFunction();
 
     // Empty action
-    const stateAfterEmptyAction = reducerFunction(initialState);
+    const stateAfterEmptyAction = reducerFunction();
 
     expect(stateAfterEmptyAction.value).toEqual(0);
 
