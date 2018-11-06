@@ -137,16 +137,16 @@ my-app/
   src/
     App.css
     App.js
-    App.test.js
+    App.testReducer.ts
     index.css
-    index.js
+    index.ts
     logo.svg
 ```
 
 For the project to build, **these files must exist with exact filenames**:
 
 * `public/index.html` is the page template;
-* `src/index.js` is the JavaScript entry point.
+* `src/index.ts` is the JavaScript entry point.
 
 You can delete or rename the other files.
 
@@ -507,7 +507,7 @@ class Button extends Component {
 
 In development, expressing dependencies this way allows your styles to be reloaded on the fly as you edit them. In production, all CSS files will be concatenated into a single minified `.css` file in the build output.
 
-If you are concerned about using Webpack-specific semantics, you can put all your CSS right into `src/index.css`. It would still be imported from `src/index.js`, but you could always remove that import if you later migrate to a different build tool.
+If you are concerned about using Webpack-specific semantics, you can put all your CSS right into `src/index.css`. It would still be imported from `src/index.ts`, but you could always remove that import if you later migrate to a different build tool.
 
 ## Post-Processing CSS
 
@@ -787,7 +787,7 @@ Alternatively you may use `yarn`:
 yarn add react-bootstrap bootstrap@3
 ```
 
-Import Bootstrap CSS and optionally Bootstrap theme CSS in the beginning of your ```src/index.js``` file:
+Import Bootstrap CSS and optionally Bootstrap theme CSS in the beginning of your ```src/index.ts``` file:
 
 ```js
 import 'bootstrap/dist/css/bootstrap.css';
@@ -1295,12 +1295,12 @@ We recommend that you use a separate tool for browser end-to-end tests if you ne
 Jest will look for test files with any of the following popular naming conventions:
 
 * Files with `.js` suffix in `__tests__` folders.
-* Files with `.test.js` suffix.
+* Files with `.testReducer.ts` suffix.
 * Files with `.spec.js` suffix.
 
-The `.test.js` / `.spec.js` files (or the `__tests__` folders) can be located at any depth under the `src` top level folder.
+The `.testReducer.ts` / `.spec.js` files (or the `__tests__` folders) can be located at any depth under the `src` top level folder.
 
-We recommend to put the test files (or `__tests__` folders) next to the code they are testing so that relative imports appear shorter. For example, if `App.test.js` and `App.js` are in the same folder, the test just needs to `import App from './App'` instead of a long relative path. Colocation also helps find tests more quickly in larger projects.
+We recommend to put the test files (or `__tests__` folders) next to the code they are testing so that relative imports appear shorter. For example, if `App.testReducer.ts` and `App.js` are in the same folder, the test just needs to `import App from './App'` instead of a long relative path. Colocation also helps find tests more quickly in larger projects.
 
 ### Command Line Interface
 
@@ -1813,12 +1813,12 @@ that your web app is reliably fast, even on a slow or unreliable network.
 
 If you would prefer not to enable service workers prior to your initial
 production deployment, then remove the call to `serviceWorkerRegistration.register()`
-from [`src/index.js`](src/index.js).
+from [`src/index.ts`](src/index.ts).
 
 If you had previously enabled service workers in your production deployment and
 have decided that you would like to disable them for all your existing users,
 you can swap out the call to `serviceWorkerRegistration.register()` in
-[`src/index.js`](src/index.js) with a call to `serviceWorkerRegistration.unregister()`.
+[`src/index.ts`](src/index.ts) with a call to `serviceWorkerRegistration.unregister()`.
 After the user visits a page that has `serviceWorkerRegistration.unregister()`,
 the service worker will be uninstalled. Note that depending on how `/service-worker.js` is served,
 it may take up to 24 hours for the cache to be invalidated.
@@ -2354,7 +2354,7 @@ When you save a file while `npm start` is running, the browser should refresh wi
 If this doesn’t happen, try one of the following workarounds:
 
 * If your project is in a Dropbox folder, try moving it out.
-* If the watcher doesn’t see a file called `index.js` and you’re referencing it by the folder name, you [need to restart the watcher](https://github.com/facebookincubator/create-react-app/issues/1164) due to a Webpack bug.
+* If the watcher doesn’t see a file called `index.ts` and you’re referencing it by the folder name, you [need to restart the watcher](https://github.com/facebookincubator/create-react-app/issues/1164) due to a Webpack bug.
 * Some editors like Vim and IntelliJ have a “safe write” feature that currently breaks the watcher. You will need to disable it. Follow the instructions in [“Adjusting Your Text Editor”](https://webpack.js.org/guides/development/#adjusting-your-text-editor).
 * If your project path contains parentheses, try moving the project to a path without them. This is caused by a [Webpack watcher bug](https://github.com/webpack/watchpack/issues/42).
 * On Linux and macOS, you might need to [tweak system settings](https://github.com/webpack/docs/wiki/troubleshooting#not-enough-watchers) to allow more watchers.
