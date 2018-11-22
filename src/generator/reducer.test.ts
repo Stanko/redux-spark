@@ -17,13 +17,6 @@ describe('Reducer', () => {
     // Add sync action
     usersReducer.addAction('addUser', (state:any, action:any) => state);
 
-    const actionCreators = usersReducer.getActionCreators();
-
-    // Action creators
-    expect(typeof actionCreators).toEqual('object');
-    expect(Object.keys(actionCreators).length).toBe(1);
-    expect(typeof actionCreators.addUser).toEqual('function');
-
     // Action handlers
     const actionHandlers = usersReducer.getActionHandlers();
 
@@ -42,13 +35,6 @@ describe('Reducer', () => {
       start: (state:any, action:any) => state,
       success: (state:any, action:any) => state,
     });
-
-    // Action creators
-    const actionCreators = usersReducer.getActionCreators();
-    
-    expect(typeof actionCreators).toEqual('object');
-    expect(Object.keys(actionCreators).length).toEqual(1);
-    expect(typeof actionCreators.getUsers).toEqual('function');
 
     // Action handlers
     const actionHandlers = usersReducer.getActionHandlers();
@@ -80,18 +66,17 @@ describe('Reducer', () => {
     const initialState = { value: 0 };
     const counterReducer = new Reducer('counter', initialState);
 
-    counterReducer.addAction('increase', (state:any, action:any) => {
+    const increase = counterReducer.addAction('increase', (state:any, action:any) => {
       return {
         value: state.value + 1,
       };
     });
-    counterReducer.addAction('decrease', (state:any, action:any) => {
+    const decrease = counterReducer.addAction('decrease', (state:any, action:any) => {
       return {
         value: state.value - 1,
       };
     });
 
-    const actionCreators = counterReducer.getActionCreators();
     const reducerFunction = counterReducer.getReducerFunction();
 
     // Empty action
@@ -100,14 +85,14 @@ describe('Reducer', () => {
     expect(stateAfterEmptyAction.value).toEqual(0);
 
     // Increase action called twice
-    const stateAfterIncrease = reducerFunction(initialState, actionCreators.increase());
-    const stateAfterSecondIncrease = reducerFunction(stateAfterIncrease, actionCreators.increase());
+    const stateAfterIncrease = reducerFunction(initialState, increase());
+    const stateAfterSecondIncrease = reducerFunction(stateAfterIncrease, increase());
 
     expect(stateAfterIncrease.value).toEqual(1);
     expect(stateAfterSecondIncrease.value).toEqual(2);
 
     // Decrease action
-    const stateAfterDecrease = reducerFunction(initialState, actionCreators.decrease());
+    const stateAfterDecrease = reducerFunction(initialState, decrease());
 
     expect(stateAfterDecrease.value).toEqual(-1);
   });

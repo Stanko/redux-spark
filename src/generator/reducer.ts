@@ -4,9 +4,13 @@ import core from './core';
 import createSaga from './create-saga';
 import { camel2const } from './utils';
 
-
 // Action handler function
 type TActionHandler = (state:any, action:object) => any;
+
+// Object
+interface IObject { 
+  [key:string]: any
+};
 
 // Action handlers map
 interface IActionHandlersMap { 
@@ -32,6 +36,12 @@ type TActionCreator = (...param:any) => IAction;
 // Action creators map
 interface IActionCreatorsMap { 
   [key:string]: TActionCreator
+};
+
+// Custom saga options object
+interface ISagaOptions { 
+  saga?: any,
+  effect?: any,
 };
 
 export default class Reducer {
@@ -60,6 +70,8 @@ export default class Reducer {
    * 
    * @param actionName - action name, it will be used for generating action type and as action creator name.
    * @param handler - handler function.
+   * 
+   * @return Action creator function.
    */
   public addAction(actionName:string, handler:TActionHandler):TActionCreator {
     const actionType = camel2const(actionName);
@@ -73,32 +85,42 @@ export default class Reducer {
    * Generates action types, action creators and sagas.
    * 
    * @param actionName - action name, it will be used for generating action type and as action creator name.
-   * @param asyncMethod - async function which will used in saga (returns promise).
+   * @param asyncMethod - async function which will used in saga (has to return promise).
    * @param handlers - map with start/error/success handler functions.
    * @param effect - custom saga effect, default: takeLatest
+   * 
+   * @return Action creator function.
    */
   public addAsyncAction(
     actionName:string, 
     asyncMethod:any, 
     handlers:IAsyncActionHandlerMap,
-    effect:any = takeLatest,
+    sagaOptions:ISagaOptions = {},
   ):TActionCreator {
     const actionTypeBody = camel2const(actionName);
     const actions = ['start', 'error', 'success'];
 
     const actionTypes = {
-      error: `${ actionTypeBody }_ERROR`,
       start: `${ actionTypeBody }_START`,
+      error: `${ actionTypeBody }_ERROR`,
       success: `${ actionTypeBody }_SUCCESS`,
     }
 
-    // Create saga if user didn't pass it
-    const saga = createSaga(asyncMethod, actionTypes, effect);
+    const saga = sagaOptions.saga ?
+      // User defined saga
+      sagaOptions.saga :
+      // Create saga if user didn't pass it
+      createSaga(asyncMethod, actionTypes, sagaOptions.effect || takeLatest);
 
     this.sagas.push(saga);
 
+    // Action creator
     const actionCreator = this.addActionCreator(actionName, actionTypes.start);
     
+    // Action types
+    // [ACTION_NAME]_START
+    // [ACTION_NAME]_ERROR
+    // [ACTION_NAME]_SUCCESS
     actions.forEach((currentActionName:string) => {
       const actionType = actionTypes[currentActionName];
 
@@ -108,20 +130,11 @@ export default class Reducer {
     return actionCreator;
   }
 
-  /**
-   * Gets all of the generated action creators
-   * 
-   * @return Map of reducer's action creators.
-   */
-  public getActionCreators():any {
-    return this.actionCreators;
-  }
-
   // -------- PUBLIC METHODS 
   // -------- INTENDED FOR INTERNAL USE ONLY
 
   /**
-   * Caution! Intended for internal use only.
+   * CAUTION! Intended for internal use only.
    * Returns reducer function.
    * 
    * @return Reducer function with using handlers map.
@@ -134,7 +147,7 @@ export default class Reducer {
   }
 
   /**
-   * Caution! Intended for internal use only.
+   * CAUTION! Intended for internal use only.
    * Gets all of the generated sagas.
    * 
    * @return Array of all generated sagas.
@@ -144,7 +157,7 @@ export default class Reducer {
   }
 
   /**
-   * Caution! Intended for internal use only (testing).
+   * CAUTION! Intended for internal use only (testing).
    * Gets map of action handlers
    * 
    * @return Map of action handlers.
@@ -162,11 +175,13 @@ export default class Reducer {
    *
    * @param actionName - Action name (ie. getUsers)
    * @param actionType - Action type (ie. GET_USERS)
+   * 
+   * @return Action creator function.
    */
   private addActionCreator(actionName:string, actionType:string):TActionCreator {
-    const actionCreator = (...params:any[]) => ({
+    const actionCreator = (params:IObject) => ({
       type: actionType,
-      ...params,
+      params,
     });
 
     this.actionCreators[actionName] = actionCreator;

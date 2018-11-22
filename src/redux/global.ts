@@ -26,7 +26,7 @@ const global = new Reducer('global', {
 });
 
 // Add sync action
-global.addAction('toggleModal', (state:any, action:any) => {
+const toggleModal = global.addAction('toggleModal', (state:any, action:any) => {
   return {
     ...state,
     isModalActive: !state.isModalActive,
@@ -34,7 +34,7 @@ global.addAction('toggleModal', (state:any, action:any) => {
 });
 
 // Add async action
-global.addAsyncAction('getSettings', api.getSettings, {
+const getSettings = global.addAsyncAction('getSettings', api.getSettings, {
   start: (state:any, action:any) => {
     return {
       ...state,
@@ -60,12 +60,8 @@ global.addAsyncAction('getSettings', api.getSettings, {
 });
 
 // Export action creators
-// {
-//   toggleModal
-//   getSettings
-// }
-export const {
+export {
   toggleModal,
   getSettings,
-} = global.getActionCreators();
+};
 
