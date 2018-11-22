@@ -44,8 +44,10 @@ describe('Core', () => {
 
     expect(Array.isArray(sagas)).toEqual(true);
     expect(sagas.length).toBe(2);
+
     sagas.forEach(saga => {
-      expect(typeof saga).toEqual('function');
+      expect(typeof saga).toEqual('object');
+      expect(typeof saga.next).toEqual('function');
     });
   });
 });

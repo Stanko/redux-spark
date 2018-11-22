@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 
-import core from "src/generator/core";
+import core from '../generator/core';
 
 import './global';
 

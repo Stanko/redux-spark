@@ -1,8 +1,9 @@
-import Reducer from 'src/generator/reducer';
+import Reducer from '../generator/reducer';
 
 // TODO Fake API
 const api = {
   getSettings: () => new Promise(resolve => {
+    // Fake errors
     if (Math.random() > 0.75) {
       throw { message: 'error!' };
     } else {
@@ -42,7 +43,6 @@ global.addAsyncAction('getSettings', api.getSettings, {
       settingsLoading: true,
     };
   },
-  // tslint:disable-next-line object-literal-sort-keys
   error: (state:any, action:any) => {
     return {
       ...state,

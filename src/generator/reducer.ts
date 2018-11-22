@@ -1,11 +1,9 @@
+import { takeLatest } from 'redux-saga/effects';
+
 import core from './core';
 import createSaga from './create-saga';
+import { camel2const } from './utils';
 
-const camel2const = (camelCase:string):string => {
-  return camelCase
-    .replace(/([A-Z])/g, match => `_${match}`)
-    .toUpperCase();
-};
 
 // Action handler function
 type TActionHandler = (state:any, action:object) => any;
@@ -22,8 +20,14 @@ interface IAsyncActionHandlerMap {
   success: TActionHandler,
 };
 
+// Action
+export interface IAction { 
+  type:string
+  [key:string]: any
+};
+
 // Action creator function
-type TActionCreator = (...param:any) => object;
+type TActionCreator = (...param:any) => IAction;
 
 // Action creators map
 interface IActionCreatorsMap { 
@@ -31,7 +35,6 @@ interface IActionCreatorsMap {
 };
 
 export default class Reducer {
-  private name:string;
   private actionHandlers:IActionHandlersMap = {};
   private actionCreators:IActionCreatorsMap = {};
   private sagas:any[] = [];
@@ -44,10 +47,9 @@ export default class Reducer {
    * @param initialState - reducer's initial state.
    */
   constructor(name:string, initialState:any = {}) {
-    this.name = name;
     this.initialState = initialState;
 
-    core.registerReducer(this.name, this);
+    core.registerReducer(name, this);
   }
 
   // -------- PUBLIC INTERFACE
@@ -59,11 +61,11 @@ export default class Reducer {
    * @param actionName - action name, it will be used for generating action type and as action creator name.
    * @param handler - handler function.
    */
-  public addAction(actionName:string, handler:TActionHandler) {
+  public addAction(actionName:string, handler:TActionHandler):TActionCreator {
     const actionType = camel2const(actionName);
     this.actionHandlers[actionType] = handler;
     
-    this.addActionCreator(actionName, actionType);
+    return this.addActionCreator(actionName, actionType);
   }
 
   /**
@@ -73,12 +75,14 @@ export default class Reducer {
    * @param actionName - action name, it will be used for generating action type and as action creator name.
    * @param asyncMethod - async function which will used in saga (returns promise).
    * @param handlers - map with start/error/success handler functions.
+   * @param effect - custom saga effect, default: takeLatest
    */
-  public addAsyncAction(actionName:string, asyncMethod:any, handlers:IAsyncActionHandlerMap) {
-    // TODO 
-    // create and register saga
-    // handle asyncMethod
-    // allow user to specify saga effect (default "takeLatest")
+  public addAsyncAction(
+    actionName:string, 
+    asyncMethod:any, 
+    handlers:IAsyncActionHandlerMap,
+    effect:any = takeLatest,
+  ):TActionCreator {
     const actionTypeBody = camel2const(actionName);
     const actions = ['start', 'error', 'success'];
 
@@ -88,17 +92,20 @@ export default class Reducer {
       success: `${ actionTypeBody }_SUCCESS`,
     }
 
-    // Create saga
-    const saga = createSaga(asyncMethod, actionTypes);
+    // Create saga if user didn't pass it
+    const saga = createSaga(asyncMethod, actionTypes, effect);
+
     this.sagas.push(saga);
 
-    this.addActionCreator(actionName, actionTypes.start);
+    const actionCreator = this.addActionCreator(actionName, actionTypes.start);
     
     actions.forEach((currentActionName:string) => {
       const actionType = actionTypes[currentActionName];
 
       this.actionHandlers[actionType] = handlers[currentActionName];
     });
+
+    return actionCreator;
   }
 
   /**
@@ -111,7 +118,7 @@ export default class Reducer {
   }
 
   // -------- PUBLIC METHODS 
-  // -------- For internal use only
+  // -------- INTENDED FOR INTERNAL USE ONLY
 
   /**
    * Caution! Intended for internal use only.
@@ -146,16 +153,6 @@ export default class Reducer {
     return this.actionHandlers;
   }
 
-  // TODO check if we need this
-  /**
-   * Returns reducer's name.
-   * 
-   * @return Reducer's name.
-   */
-  // public getName():string {
-  //   return this.name;
-  // }
-
 
   // -------- PRIVATE METHODS
 
@@ -166,10 +163,14 @@ export default class Reducer {
    * @param actionName - Action name (ie. getUsers)
    * @param actionType - Action type (ie. GET_USERS)
    */
-  private addActionCreator(actionName:string, actionType:string) {
-    this.actionCreators[actionName] = (...params:any[]) => ({
+  private addActionCreator(actionName:string, actionType:string):TActionCreator {
+    const actionCreator = (...params:any[]) => ({
       type: actionType,
       ...params,
     });
+
+    this.actionCreators[actionName] = actionCreator;
+
+    return actionCreator;
   }
 }

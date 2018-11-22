@@ -1,5 +1,5 @@
 import { all } from 'redux-saga/effects';
-import core from "src/generator/core";
+import core from '../generator/core';
 
 
 export default function* rootSaga() {
