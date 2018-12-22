@@ -4,7 +4,7 @@ interface IReducerMap {
   [key:string]: Reducer,
 };
 
-class Core {
+class Spark {
   private reducers:IReducerMap = {};
 
   // -------- PUBLIC INTERFACE
@@ -17,6 +17,10 @@ class Core {
    * @param reducer - reducer to be registered.
    */
   public registerReducer(reducerName:string, reducer:Reducer) {
+    if (this.reducers[reducerName]) {
+      throw new Error(`Redux Spark - reducer "${ reducerName }" already exists.`);
+    }
+
     this.reducers[reducerName] = reducer;
   }
 
@@ -57,4 +61,4 @@ class Core {
   // -------- PRIVATE METHODS
 }
 
-export default new Core();
+export default new Spark();

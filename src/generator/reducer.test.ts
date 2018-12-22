@@ -3,50 +3,52 @@ import Reducer from './reducer';
 describe('Reducer', () => {
   test('can be instantiated', () => {
     // Reducer without initial state
-    expect(new Reducer('test')).toBeDefined();
-    expect(new Reducer('test')).toBeInstanceOf(Reducer);
+    const reducerWithoutInitialState = new Reducer('reducerWithoutInitialState', {});
+    expect(reducerWithoutInitialState).toBeDefined();
+    expect(reducerWithoutInitialState).toBeInstanceOf(Reducer);
 
     // Reducer with initial state
-    expect(new Reducer('test', {})).toBeDefined();
-    expect(new Reducer('test', {})).toBeInstanceOf(Reducer);
+    const reducerWithInitialState = new Reducer('reducerWithInitialState', {});
+    expect(reducerWithInitialState).toBeDefined();
+    expect(reducerWithInitialState).toBeInstanceOf(Reducer);
   });
 
   test('should be able to add sync action', () => {
-    const usersReducer = new Reducer('users', {});
+    const syncReducer = new Reducer('syncReducer', {});
         
     // Add sync action
-    usersReducer.addAction('addUser', (state:any, action:any) => state);
+    syncReducer.addAction('syncAction', (state:any, action:any) => state);
 
     // Action handlers
-    const actionHandlers = usersReducer.getActionHandlers();
+    const actionHandlers = syncReducer.getActionHandlers();
 
     expect(typeof actionHandlers).toEqual('object');
     expect(Object.keys(actionHandlers).length).toBe(1);
-    expect(typeof actionHandlers.ADD_USER).toEqual('function');
+    expect(typeof actionHandlers.SYNC_ACTION).toEqual('function');
   });
 
 
   test('should be able to add async action', () => {
-    const usersReducer = new Reducer('users', {});
+    const asyncReducer = new Reducer('asyncReducer', {});
         
     // Add async action
-    usersReducer.addAsyncAction('getUsers', () => { /*MOCKED*/ }, {
+    asyncReducer.addAsyncAction('asyncAction', () => { /*MOCKED*/ }, {
       error: (state:any, action:any) => state,
       start: (state:any, action:any) => state,
       success: (state:any, action:any) => state,
     });
 
     // Action handlers
-    const actionHandlers = usersReducer.getActionHandlers();
+    const actionHandlers = asyncReducer.getActionHandlers();
 
     expect(typeof actionHandlers).toEqual('object');
     expect(Object.keys(actionHandlers).length).toBe(3);
-    expect(typeof actionHandlers.GET_USERS_START).toEqual('function');
-    expect(typeof actionHandlers.GET_USERS_ERROR).toEqual('function');
-    expect(typeof actionHandlers.GET_USERS_SUCCESS).toEqual('function');
+    expect(typeof actionHandlers.ASYNC_ACTION_START).toEqual('function');
+    expect(typeof actionHandlers.ASYNC_ACTION_ERROR).toEqual('function');
+    expect(typeof actionHandlers.ASYNC_ACTION_SUCCESS).toEqual('function');
 
     // Sagas
-    const sagas = usersReducer.getSagas();
+    const sagas = asyncReducer.getSagas();
 
     expect(Array.isArray(sagas)).toEqual(true);
     expect(sagas.length).toBe(1);
@@ -56,9 +58,9 @@ describe('Reducer', () => {
   });
 
   test('should be able to get reducer function', () => {
-    const usersReducer = new Reducer('users', {});
+    const getFunctionReducer = new Reducer('getFunction', {});
 
-    const reducerFunction = usersReducer.getReducerFunction();
+    const reducerFunction = getFunctionReducer.getReducerFunction();
     expect(typeof reducerFunction).toEqual('function');
   });
   

@@ -1,137 +1,59 @@
-# Redux generator
+# Redux Spark
 
-Quick start:
+[ ] think of a way to pass action types to a custom user saga
+[ ] reducer name validation (regex?)
 
-```
-npm start 
-```
-
-This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app). Check their default [readme](RCA-README.md).
 
 ## What is this?
 
-This is a try to reduce boilerplate code in react/redux/saga applications. Instead of writing action types, action creators, sagas and reducers, this library allows you only to write reducers. Everything else is generated under the hood. 
+Spark is a thin wrapper around [redux](https://redux.js.org/) and [redux-saga](https://redux-saga.js.org/). We tried to reduce boilerplate code in react/redux/saga applications. Instead of writing action types, action creators, sagas and reducer, Spark allows you to call a single function and generate everything under the hood.
 
-There is a lot of customizable options, so we think it covers a lot of use cases.
-
-If you still need something that is not supported, it plays well with regular reducer/saga/types/creators combo.
+If you want to customize anything, only thing you need to write is reducer (again, everything else is generated). There is a lot of customizable options, so we think it covers a lot of use cases. If you still need something that is not supported, it plays nicely with a regular reducer/saga/types/creators setup.
 
 ## Example
 
-### Before
+Spark comes with pre built generator. `generateAsyncReducer` accepts two params - reducer's name and function that returns a promise. Hopefully [live example](TODO) will make it clearer.
 
 ```js
-// actions/users.js
-// ------ ACTION TYPES
+import generateAsyncReducer from 'redux-spark/generators';
+import api from '../api';
 
-export const GET_USER_LIST_START = 'GET_USER_LIST_START';
-export const GET_USER_LIST_ERROR = 'GET_USER_LIST_ERROR';
-export const GET_USER_LIST_SUCCESS = 'GET_USER_LIST_SUCCESS';
+const actionCreators = generateAsyncReducer('users', api.getUsers);
 
-export const CLEAR_USER_LIST = 'CLEAR_USER_LIST';
-
-// ------ ACTION CREATORS
-
-export function getUserList() {
-  return {
-    type: GET_USER_LIST_START,
-  };
-}
-
-export function clearUserList() {
-  return {
-    type: CLEAR_USER_LIST,
-  };
-}
-
-// sagas/users.js
-// ------ SAGAS
-
-import { call, put, takeLatest } from 'redux-saga/effects';
-import {
-  GET_USER_LIST_START,
-  GET_USER_LIST_SUCCESS,
-  GET_USER_LIST_ERROR,
-} from 'actions/users';
-
-import api from 'api/users';
-
-function* getUserList() {
-  try {
-    const data = yield call(api.getUserList);
-    yield put({ type: GET_USER_LIST_SUCCESS, data });
-  } catch (error) {
-    yield put({ type: GET_USER_LIST_ERROR, error });
-  }
-}
-
-export function* watchGetUserList() {
-  yield takeLatest(GET_USER_LIST_START, getUserList);
-}
-
-export default [
-  watchGetUserList(),
-];
-
-// reducers/users.js
-// ------ REDUCER
-
-import {
-  GET_USER_LIST_ERROR,
-  GET_USER_LIST_START,
-  GET_USER_LIST_SUCCESS,
-  CLEAR_USER_LIST,
-} from 'actions/users';
-
-const initialState = {
-  users: null,
-  loading: false,
-  error: null,
-};
-
-const actionsMap = {
-  [GET_USER_LIST_START]: (state) => {
-    return {
-      ...state,
-      users: null,
-      loading: true,
-      error: null,
-    };
-  },
-  [GET_USER_LIST_ERROR]: (state, action) => {
-    return {
-      ...state,
-      users: null,
-      loading: false,
-      error: action.error,
-    };
-  },
-  [GET_USER_LIST_SUCCESS]: (state, action) => {
-    return {
-      ...state,
-      users: action.data,
-      loading: false,
-    };
-  },
-  [CLEAR_USER_LIST]: () => {
-    return {
-      ...state,
-      users: null,
-    };
-  }
-};
-
-export default function reducer(state = initialState, action = {}) {
-  const fn = actionsMap[action.type];
-  return fn ? fn(state, action) : state;
-}
+export const {
+  get,
+  reset,
+} = actionCreators;
 ```
 
-### After
+Code above generates:
+
+* Four actions types - one for reset action and three for async get action
+* Two action creators - `get` and `reset`
+* Saga and watcher - for async get action using `getLatest`
+* Reducer function - with the following state:
+  ```js
+  {
+    // data returned from api.getUsers
+    data: object, 
+    // error if api.getUsers fails
+    error: object, 
+    // loading indicators
+    loading: boolean, 
+    // all params passed to "get" action (i.g. pagination offset and per page) 
+    params: object, 
+  }
+  ```
+
+You can write your generators, we advise you to check the source in [generate-async-reducer.ts](TODO), it should be pretty self explanatory.
+
+Find the list of all generators [here](TODO).
+
+## Custom reducer
 
 ```js
-import Reducer from '../reducer';
-import api from 'api/users';
+import Reducer from 'redux-spark';
+import api from './api';
 
 // Create reducer
 const users = new Reducer('users', {
@@ -181,7 +103,19 @@ export const {
 } = users.getActionCreators();
 ```
 
+
+## Development
+
+Quick start:
+
+```
+npm start 
+```
+
+This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app). Check their default [readme](RCA-README.md).
+
 ## Contributors
 
 * [<img src="https://avatars2.githubusercontent.com/u/776788?v=4" width="30px;"/> Stanko Tadić](https://github.com/Stanko/)
 * [<img src="https://avatars3.githubusercontent.com/u/5328461?v=4" width="30px;"/> Radoš Pavlićević](https://github.com/radospavlicevic)
+

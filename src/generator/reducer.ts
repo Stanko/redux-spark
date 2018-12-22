@@ -1,7 +1,7 @@
 import { takeLatest } from 'redux-saga/effects';
 
-import core from './core';
 import createSaga from './create-saga';
+import spark from './spark';
 import { camel2const } from './utils';
 
 // Action handler function
@@ -51,15 +51,15 @@ export default class Reducer {
   private initialState:any;
 
   /**
-   * Creates Reducer class and registers it in the Core.
+   * Creates Reducer class and registers it in the spark.
    * 
    * @param name - name of the reducer.
    * @param initialState - reducer's initial state.
    */
   constructor(name:string, initialState:any = {}) {
-    this.initialState = initialState;
+    spark.registerReducer(name, this);
 
-    core.registerReducer(name, this);
+    this.initialState = initialState;
   }
 
   // -------- PUBLIC INTERFACE

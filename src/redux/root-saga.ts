@@ -1,9 +1,9 @@
 import { all } from 'redux-saga/effects';
-import core from '../generator/core';
+import spark from '../generator/spark';
 
 
 export default function* rootSaga() {
   yield all([
-    ...core.getAllSagas(),
+    ...spark.getAllSagas(),
   ]);
 }

@@ -16,7 +16,6 @@ export default function generateAsyncReducer(name:string, asyncMethod:any) {
   const get = reducer.addAsyncAction(`get${ capitalize(name) }`, asyncMethod, {
     start: (state:any, action:any) => {
       return {
-        ...state,
         data: null,
         error: null,
         loading: true,
