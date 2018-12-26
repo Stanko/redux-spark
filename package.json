@@ -14,7 +14,7 @@
     "build-spark": "tsc ./src/spark/index.ts --outDir ./lib --moduleResolution Node",
     "publish-docs": "sh publish-docs.sh",
     "prepare": "npm run build-spark",
-    "postpublish": "PACKAGE_VERSION=$(cat package.json | grep \\\"version\\\" | head -1 | awk -F: '{ print $2 }' | sed 's/[\",]//g' | tr -d '[[:space:]]') && git tag v$PACKAGE_VERSION && git push --tags"
+    "postpublish": "PACKAGE_VERSION=$(cat package.json | grep \\\"version\\\" | head -1 | awk -F: '{ print $2 }' | sed 's/[\",]//g' | tr -d '[[:space:]]') && git tag v$PACKAGE_VERSION && git push --tags && npm run publish-docs"
   },
   "peerDependencies": {
     "react-redux": ">=5.1.0",
