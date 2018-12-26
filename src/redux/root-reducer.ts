@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 
-import spark from '../generator/spark';
+import spark from '../spark';
 
 export default combineReducers({
   ...spark.getAllReducers(),

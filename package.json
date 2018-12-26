@@ -16,7 +16,8 @@
     "build": "react-scripts-ts build",
     "test": "react-scripts-ts test --env=jsdom",
     "test:coverage": "npm run test -- --coverage",
-    "eject": "react-scripts-ts eject"
+    "eject": "react-scripts-ts eject",
+    "build-spark": "tsc ./src/spark/index.ts --module ES6"
   },
   "devDependencies": {
     "@types/jest": "^23.3.8",

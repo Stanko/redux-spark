@@ -1,5 +1,5 @@
 import { all } from 'redux-saga/effects';
-import spark from '../generator/spark';
+import spark from '../spark';
 
 
 export default function* rootSaga() {

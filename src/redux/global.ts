@@ -1,4 +1,4 @@
-import Reducer from '../generator/reducer';
+import { Reducer } from '../spark';
 
 import api from '../api';
 

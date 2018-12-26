@@ -1,4 +1,4 @@
-import generateAsyncReducer from '../generator/generate-async-reducer';
+import { generateAsyncReducer } from '../spark';
 
 import api from '../api';
 
