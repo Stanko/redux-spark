@@ -1,14 +1,16 @@
+We are still working on documentation.
+
 # Redux Spark
 
-[ ] think of a way to pass action types to a custom user saga
-[ ] reducer name validation (regex?)
+* [ ] think of a way to pass action types to a custom user saga
+* [ ] reducer name validation (regex?)
 
 
 ## What is this?
 
 Spark is a thin wrapper around [redux](https://redux.js.org/) and [redux-saga](https://redux-saga.js.org/). We tried to reduce boilerplate code in react/redux/saga applications. Instead of writing action types, action creators, sagas and reducer, Spark allows you to call a single function and generate everything under the hood.
 
-If you want to customize anything, only thing you need to write is reducer (again, everything else is generated). There is a lot of customizable options, so we think it covers a lot of use cases. If you still need something that is not supported, it plays nicely with a regular reducer/saga/types/creators setup.
+If you want to customize anything, only thing you need to write is a reducer (again, everything else is generated). There is a lot of customizable options, so we think it covers a lot of use cases. If you still need something that is not supported, it plays nicely with a standard reducer/saga/types/creators setup.
 
 ## Example
 
@@ -28,9 +30,9 @@ export const {
 
 Code above generates:
 
-* Four actions types - one for reset action and three for async get action
+* Four actions types - one for `reset` action and three for async `get` action
 * Two action creators - `get` and `reset`
-* Saga and watcher - for async get action using `getLatest`
+* Saga and watcher - for async `get` action using `getLatest`
 * Reducer function - with the following state:
   ```js
   {
