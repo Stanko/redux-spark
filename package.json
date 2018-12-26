@@ -5,6 +5,7 @@
   "main": "lib/index.js",
   "description": "Spark is a thin wrapper around redux and redux-saga. It reduces boilerplate code in react/redux/saga applications.",
   "dependencies": {},
+  "homepage": "/redux-spark/",
   "scripts": {
     "start": "react-scripts-ts start",
     "build": "react-scripts-ts build",
