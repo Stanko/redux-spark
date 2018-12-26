@@ -11,7 +11,8 @@
     "test": "react-scripts-ts test --env=jsdom",
     "test:coverage": "npm run test -- --coverage",
     "eject": "react-scripts-ts eject",
-    "build-spark": "tsc ./src/spark/index.ts --outDir ./lib --moduleResolution Node"
+    "build-spark": "tsc ./src/spark/index.ts --outDir ./lib --moduleResolution Node",
+    "publish-docs": "sh publish-docs.sh"
   },
   "peerDependencies": {
     "react-redux": ">=5.1.0",
