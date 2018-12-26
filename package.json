@@ -2,24 +2,31 @@
   "name": "redux-spark",
   "version": "0.1.0",
   "private": true,
-  "dependencies": {
-    "@types/react-redux": "^6.0.9",
-    "react": "^16.6.0",
-    "react-dom": "^16.6.0",
-    "react-redux": "^5.1.0",
-    "react-scripts-ts": "3.1.0",
-    "redux": "^4.0.1",
-    "redux-saga": "^0.16.2"
-  },
+  "main": "lib/index.js",
+  "description": "Spark is a thin wrapper around redux and redux-saga. It reduces boilerplate code in react/redux/saga applications.",
+  "dependencies": {},
   "scripts": {
     "start": "react-scripts-ts start",
     "build": "react-scripts-ts build",
     "test": "react-scripts-ts test --env=jsdom",
     "test:coverage": "npm run test -- --coverage",
     "eject": "react-scripts-ts eject",
-    "build-spark": "tsc ./src/spark/index.ts --module ES6"
+    "build-spark": "tsc ./src/spark/index.ts --outDir ./lib --moduleResolution Node"
+  },
+  "peerDependencies": {
+    "react-redux": ">=5.1.0",
+    "react": ">=15.6.2",
+    "redux-saga": ">=0.16.2",
+    "redux": ">=4.0.1"
   },
   "devDependencies": {
+    "react": "^16.6.0",
+    "react-dom": "^16.6.0",
+    "react-redux": "^5.1.0",
+    "react-scripts-ts": "3.1.0",
+    "redux": "^4.0.1",
+    "redux-saga": "^0.16.2",
+    "@types/react-redux": "^6.0.9",
     "@types/jest": "^23.3.8",
     "@types/node": "^10.12.1",
     "@types/react": "^16.4.18",
