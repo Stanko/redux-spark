@@ -2,7 +2,6 @@ We are still working on documentation.
 
 # Redux Spark
 
-* [ ] think of a way to pass action types to a custom user saga
 * [ ] reducer name validation (regex?)
 
 
@@ -54,57 +53,93 @@ Find the list of all generators [here](TODO).
 ## Custom reducer
 
 ```js
-import Reducer from 'redux-spark';
+import { Reducer } from 'redux-spark';
 import api from './api';
 
-// Create reducer
-const users = new Reducer('users', {
-  users: null,
-  error: null,
-  loading: false,
-});
-
-// Add async action
-users.addAsyncAction('getUsers', api.getUsers, {
-  start: (state, action) => {
-    return {
-      ...state,
-      users: null,
-      error: null,
-      loading: true,
-    };
-  },
-  error: (state, action) => {
-    return {
-      ...state,
-      error: action.error,
-      loading: false,
-    };
-  },
-  success: (state, action) => {
-    return {
-      ...state,
-      users: action.data,
-      loading: false,
-    };
-  },
+// Create app reducer
+const global = new Reducer('global', {
+  isModalActive: false,
+  settings: null,
+  settingsError: null,
+  settingsLoading: false,
 });
 
 // Add sync action
-global.addAction('clearUserList', () => {
+export const toggleModal = global.addAction('toggleModal', (state:any, action:any) => {
   return {
     ...state,
-    users: null,
+    isModalActive: !state.isModalActive,
   };
 });
 
-// Export action creators
-export const {
-  getUsers,
-  clearUserList,
-} = users.getActionCreators();
+// Add async action
+export const getSettings = global.addAsyncAction('getSettings', api.getSettings, {
+  start: (state:any, action:any) => {
+    return {
+      ...state,
+      settings: null,
+      settingsError: null,
+      settingsLoading: true,
+    };
+  },
+  error: (state:any, action:any) => {
+    return {
+      ...state,
+      settingsError: action.error,
+      settingsLoading: false,
+    };
+  },
+  success: (state:any, action:any) => {
+    return {
+      ...state,
+      settings: action.data,
+      settingsLoading: false,
+    };
+  },
+});
 ```
 
+## API
+
+Before diving into API, be sure to check examples above.
+
+### Spark core
+
+
+### Async Reducer Generator
+
+### Reducer
+
+  * Constructor 
+    * `name` string
+    * `initialState` any type (you can use plain object or for example Immutable instance)
+
+    Returns `Reducer` instance.
+
+  * `addAction`
+    * `actionName` string, camel cased (e.g. `toggleModal`, generated action type will be `TOGGLE_MODAL`).
+    * `handler` reducer function with two params `state` and `action`.
+    
+    Returns action creator function.
+
+  * `addAsyncAction`
+    * `actionName` string, camel cased (e.g. `getUsers`, generated action types will be `GET_USERS_START`, `GET_USERS_SUCCESS`, `GET_USERS_ERROR`).
+    * `asyncMethod` function that returns a promise. This promise will be resolved in the generated saga creator, and data returned to the handler.
+    * `handlers` map (object) with `start/success/end` keys, each being reducer function with two params `state` and `action`. Each handler responds to one of the three generated actions.
+    * `sagaOptions` object, if you want to customize saga effect *or* pass a custom saga, you need to pass it in this object.
+      * Custom effect:
+        ```js
+        { effect: takeEvery }
+        ```
+      * Custom saga creator (it needs to be a function, so Spark can pass object with generated action types).
+        ```js
+        { sagaCreator: (actionsTypes) => yourCustomSaga }
+        ```
+        `actionsTypes` is an object with `start/success/end` keys, each one corresponding to the action type. (e.g. `GET_USERS_START`, `GET_USERS_SUCCESS`, `GET_USERS_ERROR`)
+
+    Returns action creator function.
+
+    By default generated saga will use `takeLatest` effect.
 
 ## Development
 
