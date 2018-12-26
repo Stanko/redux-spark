@@ -18,14 +18,16 @@
     "strictNullChecks": true,
     "suppressImplicitAnyIndexErrors": true,
     "noUnusedLocals": true,
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
   },
   "exclude": [
     "node_modules",
+    "lib",
     "build",
     "scripts",
     "acceptance-tests",
     "webpack",
+    "coverage",
     "jest",
     "src/setupTests.ts"
   ]
