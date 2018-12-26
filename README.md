@@ -2,8 +2,9 @@ We are still working on documentation.
 
 # Redux Spark
 
-* [ ] reducer name validation (regex?)
 
+[![npm version](https://img.shields.io/npm/v/redux-spark.svg?style=flat-square)](https://www.npmjs.com/package/redux-spark)
+[![npm downloads](https://img.shields.io/npm/dm/redux-spark.svg?style=flat-square)](https://www.npmjs.com/package/redux-spark)
 
 ## What is this?
 
@@ -16,9 +17,10 @@ If you want to customize anything, only thing you need to write is a reducer (ag
 Spark comes with pre built generator. `generateAsyncReducer` accepts two params - reducer's name and function that returns a promise. Hopefully [live example](TODO) will make it clearer.
 
 ```js
-import generateAsyncReducer from 'redux-spark/generators';
+import { generateAsyncReducer } from 'redux-spark';
 import api from '../api';
 
+// api.getUsers returns a promise
 const actionCreators = generateAsyncReducer('users', api.getUsers);
 
 export const {
@@ -105,6 +107,31 @@ Before diving into API, be sure to check examples above.
 
 ### Spark core
 
+`getAllReducers` method will return array containing all of the generated reducers. You need to add it to your root reducer (only once).
+
+```js
+import { combineReducers } from 'redux';
+import spark from 'redux-spark';
+
+export default combineReducers({
+  // You can put any additional reducers here
+  ...spark.getAllReducers(),
+});
+```
+
+Same thing for sagas. `getAllSagas` will return an array containing all of the generated sagas. You need to yield them in your root saga.
+
+```js
+import { all } from 'redux-saga/effects';
+import spark from 'redux-spark';
+
+export default function* rootSaga() {
+  yield all([
+    // You can put any additional sagas here
+    ...spark.getAllSagas(),
+  ]);
+}
+```
 
 ### Async Reducer Generator
 
