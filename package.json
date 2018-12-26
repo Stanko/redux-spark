@@ -1,7 +1,6 @@
 {
   "name": "redux-spark",
-  "version": "0.1.0",
-  "private": true,
+  "version": "0.0.1",
   "main": "lib/index.js",
   "description": "Spark is a thin wrapper around redux and redux-saga. It reduces boilerplate code in react/redux/saga applications.",
   "dependencies": {},
@@ -13,7 +12,9 @@
     "test:coverage": "npm run test -- --coverage",
     "eject": "react-scripts-ts eject",
     "build-spark": "tsc ./src/spark/index.ts --outDir ./lib --moduleResolution Node",
-    "publish-docs": "sh publish-docs.sh"
+    "publish-docs": "sh publish-docs.sh",
+    "prepublish": "npm run build-spark",
+    "postpublish": "PACKAGE_VERSION=$(cat package.json | grep \\\"version\\\" | head -1 | awk -F: '{ print $2 }' | sed 's/[\",]//g' | tr -d '[[:space:]]') && git tag v$PACKAGE_VERSION && git push --tags"
   },
   "peerDependencies": {
     "react-redux": ">=5.1.0",

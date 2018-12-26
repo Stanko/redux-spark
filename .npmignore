@@ -3,3 +3,8 @@ node_modules
 .module-cache
 *.log*
 _nogit
+build
+coverage
+public
+src
+/diff*

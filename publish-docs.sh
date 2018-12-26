@@ -4,9 +4,11 @@
 npm run build
 # Switch to gh-pages branch
 git checkout gh-pages
+# Remove old static assets
+rm -rf ./static
 # Copy everything from build to root
 cp -r ./build/* ./
-# Commit with current time
+# Add all files
 git add .
 # Commit with current time
 git commit -a -m "Demo updated `date +'%Y-%m-%d %H:%M:%S'`"
