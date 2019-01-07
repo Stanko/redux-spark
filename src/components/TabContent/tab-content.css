@@ -1,0 +1,24 @@
+.TabContent {
+  display: flex;
+  flex-wrap: wrap;
+  border-top: 2px solid black;
+}
+
+.TabContent-code {
+  flex-basis: 66.66%;
+}
+
+.TabContent-pre {
+  margin-top: 0 !important;
+}
+
+.TabContent-trigger {
+}
+
+.TabContent-title--triggers {
+  margin-bottom: 4rem;
+}
+
+.TabContent-log {
+  margin-top: 4rem;
+}

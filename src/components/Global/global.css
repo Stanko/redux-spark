@@ -1,0 +1,40 @@
+.Input {
+}
+
+.Input-label {
+  display: block;
+  margin: 1rem 0;
+  font-size: 1.6rem;
+}
+
+.Input-field {
+  font-size: 1.6rem;
+  border-radius: .5rem;
+  border: thin solid gray;
+  padding: 1.5rem 2rem;
+  margin-bottom: 1rem;
+  outline: none;
+}
+
+.Button {
+  font-size: 1.6rem;
+  border: thin solid black;
+  border-radius: .5rem;
+  padding: 1.5rem 2rem;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.ApiLabel {
+  margin-bottom: 4rem;
+}
+
+.ApiLabel-caption {
+  font-weight: bold;
+}
+
+.ApiLabel-url {
+  color: rgb(12, 127, 149);
+  margin-left: 1rem;
+  text-decoration: underline;
+}

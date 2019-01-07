@@ -11,7 +11,10 @@ export interface IAsyncActionTypesMap {
 const createSaga = (asyncMethod:any, actionTypes:IAsyncActionTypesMap, effect:any = takeLatest) => {
   function* getData(action:IAction) {
     try {
-      const data = yield call(asyncMethod, action);
+      const args = action.params ?
+        Object.keys(action.params).map(key => action.params[key]) : [];
+
+      const data = yield call(asyncMethod, args);
       yield put({ 
         data, 
         params: action.params,

@@ -1,45 +1,24 @@
 import { Reducer } from '../spark';
 
-import api from '../api';
-
 // Create app reducer
 const global = new Reducer('global', {
-  isModalActive: false,
-  settings: null,
-  settingsError: null,
-  settingsLoading: false,
+  toggleFlag: false,
+  title: '',
 });
 
 // Add sync action
-export const toggleModal = global.addAction('toggleModal', (state:any, action:any) => {
+export const toggleFlag = global.addAction('toggleFlag', (state:any) => {
   return {
     ...state,
-    isModalActive: !state.isModalActive,
+    toggleFlag: !state.toggleFlag,
   };
 });
 
-// Add async action
-export const getSettings = global.addAsyncAction('getSettings', api.getSettings, {
-  start: (state:any, action:any) => {
-    return {
-      ...state,
-      settings: null,
-      settingsError: null,
-      settingsLoading: true,
-    };
-  },
-  error: (state:any, action:any) => {
-    return {
-      ...state,
-      settingsError: action.error,
-      settingsLoading: false,
-    };
-  },
-  success: (state:any, action:any) => {
-    return {
-      ...state,
-      settings: action.data,
-      settingsLoading: false,
-    };
-  },
+const setTitleCreator = global.addAction('setTitle', (state:any, action: any) => {
+  return {
+    ...state,
+    title: action.params.title,
+  };
 });
+
+export const setTitle = (title:string) => setTitleCreator({ title });

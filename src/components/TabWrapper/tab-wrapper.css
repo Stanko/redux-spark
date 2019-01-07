@@ -1,0 +1,7 @@
+.TabWrapper {
+  width: 100%;
+}
+
+.TabWrapper-items {
+  display: flex;
+}
