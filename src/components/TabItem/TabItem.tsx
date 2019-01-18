@@ -24,7 +24,8 @@ export default class TabItem extends Component<IProps> {
       <button
         className={ tabItemClasses }
         onClick={ this.handleClick }
-      >{ label }
+      >
+        { label }
       </button>
     );
   }

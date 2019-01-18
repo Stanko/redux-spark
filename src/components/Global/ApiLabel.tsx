@@ -11,7 +11,7 @@ export default class ApiLabel extends Component<IProps> {
     return (
       <div className='ApiLabel'>
         <span className='ApiLabel-caption'>API:</span>
-        <span className='ApiLabel-url'>{ url }</span>
+        <a className='ApiLabel-url' href={ url } target='_blank'>{ url }</a>
       </div>
     );
   }

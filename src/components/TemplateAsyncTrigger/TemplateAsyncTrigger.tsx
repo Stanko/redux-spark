@@ -1,50 +1,50 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import { getTodoList, resetTodoList } from "../../redux/todo-list";
+import { getUsersList, resetUsersList } from "../../redux/users-list";
 import ApiLabel from "../Global/ApiLabel";
 import Button from "../Global/Button";
 
 interface IProps {
-  getTodoListAction: () => void,
-  resetTodoListAction: () => void,
+  getUsersListAction: () => void,
+  resetUsersListAction: () => void,
 }
 
 class TemplateAsyncTrigger extends Component<IProps> {
   public render() {
     return (
       <div className='TemplateAsyncTrigger'>
-        <ApiLabel url='https://jsonplaceholder.typicode.com/todos' />
+        <ApiLabel url='https://jsonplaceholder.typicode.com/users' />
         <Button
           className='TemplateAsyncTrigger-button'
           onClick={ this.handleGetClick }
-          label='Get todo list'
+          label='Get users list'
         />
         <Button
           className='TemplateAsyncTrigger-button'
           onClick={ this.handleResetClick }
-          label='Reset todo list'
+          label='Reset users list'
         />
       </div>
     );
   }
 
   private handleGetClick = () => {
-    const { getTodoListAction } = this.props;
+    const { getUsersListAction } = this.props;
 
-    getTodoListAction();
+    getUsersListAction();
   }
 
   private handleResetClick = () => {
-    const { resetTodoListAction } = this.props;
+    const { resetUsersListAction } = this.props;
 
-    resetTodoListAction();
+    resetUsersListAction();
   }
 }
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  getTodoListAction: () => dispatch(getTodoList()),
-  resetTodoListAction: () => dispatch(resetTodoList()),
+  getUsersListAction: () => dispatch(getUsersList()),
+  resetUsersListAction: () => dispatch(resetUsersList()),
 });
 
 export default connect(

@@ -19,7 +19,7 @@ export default function generateAsyncReducer(name:string, asyncMethod:any) {
         data: null,
         error: null,
         loading: true,
-        params: null, 
+        params: null,
       };
     },
     error: (state:any, action:any) => {
@@ -45,6 +45,6 @@ export default function generateAsyncReducer(name:string, asyncMethod:any) {
   return {
     get,
     reset,
+    reducer,
   };
 };
-

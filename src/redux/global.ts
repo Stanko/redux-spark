@@ -17,7 +17,7 @@ export const toggleFlag = global.addAction('toggleFlag', (state:any) => {
 const setTitleCreator = global.addAction('setTitle', (state:any, action: any) => {
   return {
     ...state,
-    title: action.params.title,
+    title: action.title,
   };
 });
 

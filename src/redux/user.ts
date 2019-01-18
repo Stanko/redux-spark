@@ -2,18 +2,18 @@ import api from "../api/api";
 import Reducer from "../spark/reducer";
 
 // Create reducer
-const todoItem = new Reducer('todoItem', {
-  data: null,
+const userReducer = new Reducer('user', {
+  user: null,
   error: null,
-  loading: true,
+  loading: false,
 });
 
 // Add async action
-const getTodoItemCreator = todoItem.addAsyncAction('getTodoItem', api.getTodoItem, {
+const get = userReducer.addAsyncAction('getUser', api.getUser, {
   start: (state:any) => {
     return {
       ...state,
-      data: null,
+      user: null,
       error: null,
       loading: true,
     };
@@ -28,11 +28,11 @@ const getTodoItemCreator = todoItem.addAsyncAction('getTodoItem', api.getTodoIte
   success: (state:any, action:any) => {
     return {
       ...state,
-      data: action.data,
-      error: false,
+      user: action.data,
+      loading: false,
     };
   },
-})
+});
 
 // Export async action
-export const getTodoItem = (id:string) => getTodoItemCreator({ id });
+export const getUser = (id:string) => get({ id });

@@ -21,6 +21,7 @@ export default class Input extends Component<IProps> {
       className,
       id,
       label,
+      value,
     } = this.props;
 
     const inputClasses = cx({
@@ -33,12 +34,14 @@ export default class Input extends Component<IProps> {
         <label
           htmlFor={ id }
           className='Input-label'
-        >{ label }
+        >
+          { label }
         </label>
         <input
           className='Input-field'
           id={ id }
           onChange={ this.handleChange }
+          value={ value }
         />
       </div>
     );

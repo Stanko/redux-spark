@@ -1,40 +1,40 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from "redux";
-import { getTodoItem } from "../../redux/todo-item";
+import { getUser } from "../../redux/user";
 import ApiLabel from "../Global/ApiLabel";
 import Button from '../Global/Button';
 import Input from '../Global/Input';
 
 interface IProps {
-  getTodoItemAction: (id: string) => void,
+  getUserAction: (id: string) => void,
 }
 
 interface IState {
-  todoId: string,
+  userId: string,
 }
 
 class AsyncTrigger extends Component<IProps, IState> {
   public state = {
-    todoId: '',
+    userId: '1',
   }
 
   public render() {
-    const { todoId } = this.state;
+    const { userId } = this.state;
 
     return (
       <div className='AsyncTrigger'>
-        <ApiLabel url='https://jsonplaceholder.typicode.com/todos/${ userId }' />
+        <ApiLabel url={ `https://jsonplaceholder.typicode.com/users/${ userId }` } />
         <Input
-          id='todo-item-id'
-          label='Todo item id'
-          placeholder='Enter todo item id'
-          value={ todoId }
+          id='user-id'
+          label='User id'
+          placeholder='Enter user id'
+          value={ userId }
           onChange={ this.handleChange }
         />
         <Button
           onClick={ this.handleClick }
-          label='Get todo item'
+          label='Get user'
         />
       </div>
     );
@@ -42,20 +42,20 @@ class AsyncTrigger extends Component<IProps, IState> {
 
   private handleChange = (value: string) => {
     this.setState({
-      todoId: value,
+      userId: value,
     });
   }
 
   private handleClick = () => {
-    const { getTodoItemAction } = this.props;
-    const { todoId } = this.state;
+    const { getUserAction } = this.props;
+    const { userId } = this.state;
 
-    getTodoItemAction(todoId);
+    getUserAction(userId);
   }
 }
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  getTodoItemAction: (id:string) => dispatch(getTodoItem(id)),
+  getUserAction: (id:string) => dispatch(getUser(id)),
 });
 
 export default connect(

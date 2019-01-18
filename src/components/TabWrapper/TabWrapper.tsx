@@ -11,6 +11,7 @@ interface IState {
   activeItemIndex: number,
   content: string,
   trigger: any,
+  reducerName: string,
 }
 
 export default class TabWrapper extends Component<IProps, IState> {
@@ -18,6 +19,7 @@ export default class TabWrapper extends Component<IProps, IState> {
     activeItemIndex: 0,
     content: config[0].code,
     trigger: config[0].trigger,
+    reducerName: config[0].reducerName,
   }
 
   public render() {
@@ -26,6 +28,7 @@ export default class TabWrapper extends Component<IProps, IState> {
     const {
       content,
       trigger,
+      reducerName,
     } = this.state;
 
     return (
@@ -37,6 +40,7 @@ export default class TabWrapper extends Component<IProps, IState> {
           reduxState={ reduxState }
           code={ content }
           trigger={ trigger }
+          reducerName={ reducerName }
         />
       </div>
     );
@@ -63,6 +67,7 @@ export default class TabWrapper extends Component<IProps, IState> {
       activeItemIndex: nextActiveIndex,
       content: config[nextActiveIndex].code,
       trigger: config[nextActiveIndex].trigger,
+      reducerName: config[nextActiveIndex].reducerName,
     });
   }
 }

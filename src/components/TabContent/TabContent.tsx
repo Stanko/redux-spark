@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import SyntaxHighlighter from 'react-syntax-highlighter';
-import { idea } from 'react-syntax-highlighter/dist/styles/hljs';
+import { githubGist } from 'react-syntax-highlighter/dist/styles/hljs';
 import ReduxStoreLog from '../../components/ReduxStoreLog/ReduxStoreLog';
 
 interface IProps {
   reduxState: object,
   code: string,
   trigger: any,
+  reducerName: string,
 }
 
 export default class TabContent extends Component<IProps> {
@@ -15,6 +16,7 @@ export default class TabContent extends Component<IProps> {
       code,
       trigger,
       reduxState,
+      reducerName,
     } = this.props;
 
     const TriggerComponent = trigger;
@@ -26,7 +28,7 @@ export default class TabContent extends Component<IProps> {
           <SyntaxHighlighter
             className='TabContent-pre'
             language='javascript'
-            style={ idea }
+            style={ githubGist }
           >
             { code }
           </SyntaxHighlighter>
@@ -36,7 +38,8 @@ export default class TabContent extends Component<IProps> {
           <TriggerComponent />
           <div className='TabContent-log'>
             <h2>Redux store</h2>
-            <ReduxStoreLog reduxState={ reduxState } />
+            <code>state.{ reducerName }</code>
+            <ReduxStoreLog reduxState={ reduxState[reducerName] } />
           </div>
         </div>
       </div>

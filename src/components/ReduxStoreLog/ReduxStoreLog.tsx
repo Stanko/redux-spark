@@ -12,6 +12,7 @@ export default class ReduxStoreLog extends Component<IProps> {
 
     return (
       <JSONTree
+        hideRoot={ true }
         data={ reduxState }
         invertTheme={ true }
         theme={ jsonTreeTheme }
