@@ -37,13 +37,13 @@ Code above generates:
   ```js
   {
     // data returned from api.getUsers
-    data: object, 
+    data: object,
     // error if api.getUsers fails
-    error: object, 
+    error: object,
     // loading indicators
-    loading: boolean, 
-    // all params passed to "get" action (i.g. pagination offset and per page) 
-    params: object, 
+    loading: boolean,
+    // all params passed to "get" action (i.g. pagination offset and per page)
+    params: object,
   }
   ```
 
@@ -136,7 +136,7 @@ export default function* rootSaga() {
 
 ### Reducer
 
-  * Constructor 
+  * Constructor
     * `name` string
     * `initialState` any type (you can use plain object or for example Immutable instance)
 
@@ -145,7 +145,7 @@ export default function* rootSaga() {
   * `addAction`
     * `actionName` string, camel cased (e.g. `toggleModal`, generated action type will be `TOGGLE_MODAL`).
     * `handler` reducer function with two params `state` and `action`.
-    
+
     Returns action creator function.
 
   * `addAsyncAction`
@@ -172,7 +172,7 @@ export default function* rootSaga() {
 Quick start:
 
 ```
-npm start 
+npm start
 ```
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app). Check their default [readme](RCA-README.md).
@@ -181,4 +181,3 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 * [<img src="https://avatars2.githubusercontent.com/u/776788?v=4" width="30px;"/> Stanko Tadić](https://github.com/Stanko/)
 * [<img src="https://avatars3.githubusercontent.com/u/5328461?v=4" width="30px;"/> Radoš Pavlićević](https://github.com/radospavlicevic)
-

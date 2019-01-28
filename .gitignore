@@ -10,6 +10,7 @@
 /build
 /dist
 /lib
+.idea
 
 # misc
 .DS_Store

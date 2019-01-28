@@ -1,0 +1,18 @@
+.TemplateAsyncTrigger-button {
+  display: block;
+  margin-bottom: 1rem;
+}
+
+.TemplateAsyncTrigger-apiLabelWrapper {
+  margin-bottom: 4rem;
+}
+
+.TemplateAsyncTrigger-apiCaption {
+  font-weight: bold;
+}
+
+.TemplateAsyncTrigger-apiLink {
+  color: rgb(12, 127, 149);
+  margin-left: 1rem;
+  text-decoration: underline;
+}

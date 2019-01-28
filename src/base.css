@@ -1,0 +1,9 @@
+@import './index.css';
+@import './App.css';
+@import 'components/Global/global.css';
+@import 'components/TabWrapper/tab-wrapper.css';
+@import 'components/TabItem/tab-item.css';
+@import 'components/TabContent/tab-content.css';
+@import 'components/TemplateAsyncTrigger/template-async-trigger.css';
+@import 'components/AsyncTrigger/async-trigger.css';
+@import 'components/SyncTrigger/sync-trigger.css';

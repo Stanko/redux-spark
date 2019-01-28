@@ -1,5 +1,17 @@
+html {
+  font-size: 10px;
+}
+
 body {
   margin: 0;
   padding: 0;
   font-family: sans-serif;
+  font-size: 1.6rem;
+}
+
+pre {
+  font-family: Menlo, monospace;
+  line-height: 1.2em;
+  padding: 0 !important;
+  margin: 0;
 }
