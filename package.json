@@ -1,6 +1,6 @@
 {
   "name": "redux-spark",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "main": "lib/index.js",
   "description": "Spark is a thin wrapper around redux and redux-saga. It reduces boilerplate code in react/redux/saga applications.",
   "dependencies": {
