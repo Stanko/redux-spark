@@ -1,6 +1,6 @@
-# Please note this is still work in progress. Examples and documentation are incomplete.
-
 # Redux Spark
+
+## Please note that examples and documentation are incomplete.
 
 [![npm version](https://img.shields.io/npm/v/redux-spark.svg?style=flat-square)](https://www.npmjs.com/package/redux-spark)
 [![npm downloads](https://img.shields.io/npm/dm/redux-spark.svg?style=flat-square)](https://www.npmjs.com/package/redux-spark)
