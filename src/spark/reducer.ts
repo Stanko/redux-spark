@@ -40,7 +40,7 @@ interface IActionCreatorsMap {
 
 // Custom saga options object
 interface ISagaOptions {
-  sagaCreator?: (actionTypes:any) => () => {},
+  sagaCreator?: (asyncMethod:any, actionTypes:any) => () => {},
   effect?: any,
 };
 
@@ -106,11 +106,13 @@ export default class Reducer {
       success: `${ actionTypeBody }_SUCCESS`,
     };
 
+    const sagaEffect = sagaOptions.effect || takeLatest;
+
     const saga = sagaOptions.sagaCreator ?
       // User defined saga
-      sagaOptions.sagaCreator(actionTypes) :
+      sagaOptions.sagaCreator(asyncMethod, actionTypes) :
       // Create saga if user didn't pass it
-      createSaga(asyncMethod, actionTypes, sagaOptions.effect || takeLatest);
+      createSaga(asyncMethod, actionTypes, sagaEffect);
 
     this.sagas.push(saga);
 
