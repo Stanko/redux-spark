@@ -106,6 +106,8 @@ Before diving into API, be sure to check examples above.
 
 ### Spark core
 
+#### Reducers
+
 `getAllReducers` method will return array containing all of the generated reducers. You need to add it to your root reducer (only once).
 
 ```js
@@ -117,6 +119,27 @@ export default combineReducers({
   ...spark.getAllReducers(),
 });
 ```
+
+PLEASE NOTE you'll need to import your reducer files somewhere, so they are executed and registered in the spark core. If you want to do it manually, you can always get a single reducer using it's built in method `.getReducerFunction()`
+
+
+```js
+import { combineReducers } from 'redux';
+
+// Import spark reducer classes
+import users from './users';
+import groups from './groups';
+
+export default combineReducers({
+  // You can put any additional reducers here
+
+  // Call "getReducerFunction" to get reducer function from spark
+  users: users.getReducerFunction(),
+  groups: groups.getReducerFunction(),
+});
+```
+
+#### Sagas
 
 Same thing for sagas. `getAllSagas` will return an array containing all of the generated sagas. You need to yield them in your root saga.
 

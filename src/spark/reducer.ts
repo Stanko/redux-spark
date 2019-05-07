@@ -136,7 +136,6 @@ export default class Reducer {
   // -------- INTENDED FOR INTERNAL USE ONLY
 
   /**
-   * CAUTION! Intended for internal use only.
    * Returns reducer function.
    *
    * @return Reducer function with using handlers map.
