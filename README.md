@@ -13,7 +13,7 @@ If you want to customize anything, only thing you need to write is a reducer (ag
 
 ## Example
 
-Spark comes with pre built generator. `generateAsyncReducer` accepts two params - reducer's name and function that returns a promise. Hopefully [live example](TODO) will make it clearer.
+Spark comes with pre built generator. `generateAsyncReducer` accepts two params - reducer's name and function that returns a promise. Hopefully [live example](http://muffinman.io/redux-spark/) will make it clearer.
 
 ```js
 import { generateAsyncReducer } from 'redux-spark';
