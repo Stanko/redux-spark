@@ -47,9 +47,7 @@ Code above generates:
   }
   ```
 
-You can write your generators, we advise you to check the source in [generate-async-reducer.ts](TODO), it should be pretty self explanatory.
-
-Find the list of all generators [here](TODO).
+You can write your generators, we advise you to check the source in [generate-async-reducer.ts](https://github.com/Stanko/redux-spark/blob/master/src/spark/generate-async-reducer.ts), it should be pretty self explanatory.
 
 ## Custom reducer
 
