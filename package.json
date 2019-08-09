@@ -9,13 +9,13 @@
     "react-syntax-highlighter": "^10.3.0"
   },
   "types": "./lib/index.d.ts",
-  "homepage": "https://github.com/Stanko/react-spark",
+  "homepage": "https://github.com/Stanko/redux-spark",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Stanko/react-spark.git"
+    "url": "https://github.com/Stanko/redux-spark.git"
   },
   "bugs": {
-    "url": "https://github.com/Stanko/react-spark/issues"
+    "url": "https://github.com/Stanko/redux-spark/issues"
   },
   "scripts": {
     "start": "react-scripts-ts start",
