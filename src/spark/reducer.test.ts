@@ -3,7 +3,7 @@ import Reducer from './reducer';
 describe('Reducer', () => {
   test('can be instantiated', () => {
     // Reducer without initial state
-    const reducerWithoutInitialState = new Reducer('reducerWithoutInitialState', {});
+    const reducerWithoutInitialState = new Reducer('reducerWithoutInitialState');
     expect(reducerWithoutInitialState).toBeDefined();
     expect(reducerWithoutInitialState).toBeInstanceOf(Reducer);
 

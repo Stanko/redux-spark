@@ -20,8 +20,8 @@
   "scripts": {
     "start": "react-scripts-ts start",
     "build": "react-scripts-ts build",
-    "test": "react-scripts-ts test --env=jsdom",
-    "test:coverage": "npm run test -- --coverage",
+    "test": "react-scripts-ts test",
+    "test:coverage": "npm run test -- --coverage --collectCoverageFrom=\"src/spark/*\"",
     "eject": "react-scripts-ts eject",
     "build-spark": "tsc --declaration ./src/spark/index.ts --outDir ./lib --moduleResolution Node",
     "publish-docs": "sh publish-docs.sh",
