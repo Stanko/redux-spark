@@ -1,5 +1,13 @@
 # Redux Spark
 
+# Deprecation notice
+
+Back when we created Spark, the whole React ecosystem was younger and we really needed a library like this. But Redux (and React) tooling evolved, and we feel like it is no longer the case.
+
+This repository will remain available for posterity, but moving forward no new features will be added or maintenance taking place. You probably want to check [Redux Toolkit](https://redux-toolkit.js.org/), official and opinionated tooling for Redux.
+
+-----
+
 [![npm version](https://img.shields.io/npm/v/redux-spark.svg?style=flat-square)](https://www.npmjs.com/package/redux-spark)
 [![npm downloads](https://img.shields.io/npm/dm/redux-spark.svg?style=flat-square)](https://www.npmjs.com/package/redux-spark)
 
